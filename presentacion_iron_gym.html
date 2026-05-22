@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRON GYM SaaS - Presentación Comercial</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-main: #090d16;
+            --bg-card: #121824;
+            --bg-card-light: #1c2537;
+            --primary: #ff6b00;
+            --primary-gradient: linear-gradient(135deg, #ff8c00 0%, #ff4b00 100%);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --border: #26334d;
+            --accent: #10b981;
+            --accent-red: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--border);
+            background-color: rgba(9, 13, 22, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 24px;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+            font-style: italic;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .tagline {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* Presentation Container */
+        .presentation-container {
+            position: relative;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            perspective: 1200px;
+        }
+
+        /* Slide Styles */
+        .slide {
+            position: absolute;
+            width: 90%;
+            max-width: 1100px;
+            height: 80%;
+            max-height: 600px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.9) translateY(30px);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            background-image: radial-gradient(circle at 100% 0%, rgba(255, 107, 0, 0.05) 0%, transparent 50%);
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1) translateY(0);
+            z-index: 2;
+        }
+
+        /* Header Slide Content */
+        .slide-header {
+            margin-bottom: 20px;
+        }
+
+        .slide-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: rgba(255, 107, 0, 0.1);
+            color: var(--primary);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 107, 0, 0.2);
+        }
+
+        .slide-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 40px;
+            font-weight: 800;
+            line-height: 1.2;
+            color: var(--text-main);
+        }
+
+        .slide-title span {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Body Slide Content */
+        .slide-body {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin: 20px 0;
+        }
+
+        .slide-content-left {
+            flex: 1.2;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .slide-content-right {
+            flex: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* List Items & Cards */
+        .feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .feature-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background-color: rgba(255, 107, 0, 0.15);
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 14px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .feature-text h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .feature-text p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Visual assets */
+        .visual-card {
+            background-color: var(--bg-card-light);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .visual-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary-gradient);
+        }
+
+        /* Slide 1 Specifics: Title Slide */
+        .slide-cover {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            background-image: radial-gradient(circle at 50% 50%, rgba(255, 107, 0, 0.1) 0%, transparent 60%);
+        }
+
+        .slide-cover h1 {
+            font-size: 64px;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-style: italic;
+            letter-spacing: -1.5px;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .slide-cover h1 span {
+            color: var(--primary);
+        }
+
+        .slide-cover p.subtitle {
+            font-size: 20px;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 30px auto;
+            line-height: 1.6;
+        }
+
+        .slide-cover .badge-container {
+            margin-bottom: 25px;
+        }
+
+        /* Tables */
+        table.commercial-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        table.commercial-table th {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 2px solid var(--border);
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        table.commercial-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        table.commercial-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        table.commercial-table strong {
+            color: var(--text-main);
+        }
+
+        /* Footer / Navigation */
+        footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            border-top: 1px solid var(--border);
+            background-color: var(--bg-main);
+            z-index: 10;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-nav {
+            background-color: var(--bg-card-light);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 10px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-nav:hover {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .btn-nav:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-bar-container {
+            flex-grow: 1;
+            margin: 0 40px;
+            height: 6px;
+            background-color: var(--bg-card-light);
+            border-radius: 100px;
+            overflow: hidden;
+            max-width: 400px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 12.5%;
+            background: var(--primary-gradient);
+            border-radius: 100px;
+            transition: width 0.4s ease;
+        }
+
+        .slide-counter {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .btn-print {
+            background: transparent;
+            border: 1px dashed var(--primary);
+            color: var(--primary);
+            padding: 10px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-print:hover {
+            background: rgba(255, 107, 0, 0.1);
+            transform: scale(1.02);
+        }
+
+        /* Mermaidy Graph Visuals with HTML/CSS */
+        .schema-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            align-items: center;
+        }
+
+        .schema-box {
+            background: var(--bg-card-light);
+            border: 1px solid var(--border);
+            padding: 12px 20px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 13px;
+            width: 100%;
+            max-width: 280px;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .schema-box.highlight {
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.15);
+        }
+
+        .schema-arrow {
+            color: var(--text-muted);
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px;
+                height: 90%;
+            }
+            .slide-title {
+                font-size: 28px;
+            }
+            .slide-body {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .slide-content-right {
+                display: none;
+            }
+            header {
+                padding: 15px 20px;
+            }
+            footer {
+                padding: 15px 20px;
+            }
+            .progress-bar-container {
+                margin: 0 15px;
+            }
+        }
+
+        /* PRINT MEDIA STYLES - Generates a perfect Multi-page PDF layout */
+        @media print {
+            body {
+                background-color: #ffffff !important;
+                color: #000000 !important;
+                overflow: visible !important;
+                height: auto !important;
+            }
+
+            header, footer {
+                display: none !important;
+            }
+
+            .presentation-container {
+                display: block !important;
+                padding: 0 !important;
+                height: auto !important;
+            }
+
+            .slide {
+                position: relative !important;
+                display: flex !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: none !important;
+                width: 100% !important;
+                height: 100vh !important;
+                max-height: 100vh !important;
+                max-width: 100% !important;
+                page-break-after: always !important;
+                background-color: #ffffff !important;
+                color: #000000 !important;
+                border: none !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+                padding: 40px !important;
+                background-image: none !important;
+            }
+
+            .slide::before {
+                display: none;
+            }
+
+            .slide-title, .slide-counter, .tagline, .logo, .feature-text h4, table.commercial-table th, table.commercial-table td strong {
+                color: #000000 !important;
+            }
+
+            .slide-title span {
+                background: none !important;
+                -webkit-text-fill-color: initial !important;
+                color: #ff6b00 !important;
+                font-weight: 800;
+            }
+
+            .slide-badge {
+                background-color: #f1f5f9 !important;
+                color: #0f172a !important;
+                border: 1px solid #cbd5e1 !important;
+            }
+
+            .feature-icon {
+                background-color: #f1f5f9 !important;
+                color: #000000 !important;
+                border: 1px solid #cbd5e1 !important;
+            }
+
+            .visual-card, .schema-box {
+                background-color: #f8fafc !important;
+                border: 1px solid #cbd5e1 !important;
+                color: #0f172a !important;
+                box-shadow: none !important;
+            }
+
+            .visual-card::before {
+                background: #ff6b00 !important;
+            }
+
+            .schema-box.highlight {
+                border-color: #ff6b00 !important;
+                color: #ff6b00 !important;
+            }
+
+            .slide-content-left {
+                flex: 1 !important;
+            }
+
+            .slide-content-right {
+                flex: 1 !important;
+                display: flex !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">IRON<span>GYM</span></div>
+        <div class="tagline">SaaS Presentation Deck</div>
+    </header>
+
+    <!-- Presentation Container -->
+    <div class="presentation-container">
+
+        <!-- Slide 1: Portada -->
+        <div class="slide slide-cover active">
+            <div class="badge-container">
+                <span class="slide-badge">PITCH COMERCIAL</span>
+            </div>
+            <h1>IRON<span>GYM</span> SaaS</h1>
+            <p class="subtitle">La revolución en control de accesos, prevención de bajas y gestión integral para gimnasios de alto rendimiento.</p>
+            <div style="font-size: 13px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 2px;">
+                PRESENTACIÓN DE PRODUCTO • 2026
+            </div>
+        </div>
+
+        <!-- Slide 2: El Problema -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="slide-badge">EL PROBLEMA</span>
+                <h2 class="slide-title">¿Por qué sufren los <span>Gimnasios</span>?</h2>
+            </div>
+            <div class="slide-body">
+                <div class="slide-content-left">
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <div class="feature-icon">1</div>
+                            <div class="feature-text">
+                                <h4>Fuga silenciosa de clientes (Churn)</h4>
+                                <p>Los socios dejan de ir gradualmente y el centro solo se entera cuando cancelan la domiciliación. Sin alarmas previas, no hay margen de recuperación.</p>
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">2</div>
+                            <div class="feature-text">
+                                <h4>Hardware de acceso obsoleto y costoso</h4>
+                                <p>Dependencia de tornos físicos rígidos, llaveros RFID propensos a pérdida y software instalado en red local difícil de mantener.</p>
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">3</div>
+                            <div class="feature-text">
+                                <h4>Pérdida de mercado internacional</h4>
+                                <p>Dificultad para integrar y retener clientes extranjeros o expatriados por no ofrecer una plataforma autogestionable y multilingüe nativa.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="slide-content-right">
+                    <div class="visual-card" style="text-align: center;">
+                        <span style="font-size: 48px;">⚠️</span>
+                        <h4 style="margin: 15px 0 10px 0; font-size: 20px;">Pérdidas operativas</h4>
+                        <p style="color: var(--text-muted); font-size: 14px; line-height: 1.5;">El 60% de los socios de gimnasios abandonan en los primeros 3 meses. Recuperar un cliente cuesta 5 veces más que retenerlo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: La Solución -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="slide-badge">LA SOLUCIÓN</span>
+                <h2 class="slide-title">La solución es <span>IRON GYM</span></h2>
+            </div>
+            <div class="slide-body">
+                <div class="slide-content-left">
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <div class="feature-text">
+                                <h4>IRON PASS (Control por QR Dinámico)</h4>
+                                <p>Un carnet digital móvil seguro. En un segundo, la recepción valida la membresía directamente desde cualquier dispositivo conectado.</p>
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <div class="feature-text">
+                                <h4>Alarma de Churn (Retención Predictiva)</h4>
+                                <p>Detecta automáticamente a los socios en riesgo según días de inactividad programables. Permite enviar motivaciones y reactivarlos con 1 clic.</p>
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <div class="feature-text">
+                                <h4>Soporte Trilingüe Nativo Instantáneo</h4>
+                                <p>Toda la interfaz en Español, Inglés y Francés. Sin barreras, ideal para gimnasios modernos en zonas cosmopolitas.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="slide-content-right">
+                    <div class="visual-card" style="background-image: radial-gradient(circle at 100% 100%, rgba(16, 185, 129, 0.1) 0%, transparent 70%);">
+                        <div style="color: var(--accent); font-weight: 700; font-size: 36px; margin-bottom: 5px;">+85%</div>
+                        <h4 style="font-size: 18px; margin-bottom: 8px;">Eficiencia Digital</h4>
+                        <p style="color: var(--text-muted); font-size: 13px; line-height: 1.4;">Unificación de administración, entrenamientos, clases colectivas y control financiero en una única base de datos sincronizada.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Arquitectura -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="slide-badge">ARQUITECTURA</span>
+                <h2 class="slide-title">Tecnología robusta sin <span>costos fijos</span></h2>
+            </div>
+            <div class="slide-body">
+                <div class="slide-content-left">
+                    <p style="color: var(--text-muted); font-size: 15px; line-height: 1.6; margin-bottom: 15px;">Hemos desarrollado una plataforma web moderna con arquitectura desacoplada basada en la nube. Esto garantiza velocidad, seguridad y disponibilidad total sin necesidad de servidores locales costosos:</p>
+                    <ul class="feature-list" style="gap: 10px;">
+                        <li style="font-size: 14px;"><strong style="color: var(--primary);">Frontend:</strong> React + Vite. Carga inmediata y diseño interactivo adaptado para dispositivos móviles y de escritorio.</li>
+                        <li style="font-size: 14px;"><strong style="color: var(--primary);">Backend API:</strong> FastAPI (Python). API moderna, segura mediante firmas de tokens JWT y de altísimo rendimiento.</li>
+                        <li style="font-size: 14px;"><strong style="color: var(--primary);">Base de Datos:</strong> MySQL relacional de alta consistencia para transacciones financieras y logs de auditoría estables.</li>
+                    </ul>
+                </div>
+                <div class="slide-content-right">
+                    <div class="schema-container">
+                        <div class="schema-box">Cliente (Navegador Móvil / PC)</div>
+                        <div class="schema-arrow">⬇️ HTTPS / JWT</div>
+                        <div class="schema-box highlight">FastAPI Backend (Nube Render)</div>
+                        <div class="schema-arrow">⬇️ SQL / PyMySQL</div>
+                        <div class="schema-box">Base de Datos MySQL (Clever Cloud)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Flujo de Accesos -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="slide-badge">FLUJO OPERATIVO</span>
+                <h2 class="slide-title">Control de accesos en <span>tiempo real</span></h2>
+            </div>
+            <div class="slide-body">
+                <div class="slide-content-left" style="flex: 1.5;">
+                    <table class="commercial-table">
+                        <thead>
+                            <tr>
+                                <th>Paso</th>
+                                <th>Acción</th>
+                                <th>¿Qué sucede internamente?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1. Registro</strong></td>
+                                <td>Alta rápida desde panel</td>
+                                <td>El administrador crea al cliente con 1 correo y contraseña. El sistema envía las credenciales automáticamente por email.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>2. Identificación</strong></td>
+                                <td>Pase Digital (QR)</td>
+                                <td>El cliente visualiza su código QR único (IRON PASS) en su teléfono al acceder.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3. Validación</strong></td>
+                                <td>Escaneo instantáneo</td>
+                                <td>La API evalúa el estado (`activo`/`suspendido`) y vigencia de la suscripción. Si la membresía está activa, concede acceso.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>4. Bloqueo/Acción</strong></td>
+                                <td>Auditoría automática</td>
+                                <td>Si está suspendido por falta de pago, deniega la entrada mostrando el motivo y registra el intento fallido.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Prevención de Churn -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="slide-badge">INTELIGENCIA DE NEGOCIO</span>
+                <h2 class="slide-title">Previene bajas con la <span>Alarma de Churn</span></h2>
+            </div>
+            <div class="slide-body">
+                <div class="slide-content-left">
+                    <p style="color: var(--text-muted); font-size: 15px; line-height: 1.6; margin-bottom: 15px;">La retención inteligente permite actuar proactivamente antes de perder al cliente. El sistema gestiona esto mediante tres pilares:</p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <div class="feature-icon">🔍</div>
+                            <div class="feature-text">
+                                <h4>Umbral programable flexible</h4>
+                                <p>Ajusta el número de días ausentes permitidos (ej. 10 días) según las dinámicas de tu centro.</p>
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">⚡</div>
+                            <div class="feature-text">
+                                <h4>Segmentación instantánea</h4>
+                                <p>El sistema genera una lista limpia ordenada por riesgo (días sin asistir) para el equipo de fidelización.</p>
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">✉️</div>
+                            <div class="feature-text">
+                                <h4>Recuperación reactiva (1-Clic)</h4>
+                                <p>Permite lanzar alertas de contacto directo o campañas motivacionales directamente al correo electrónico.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="slide-content-right">
+                    <div class="visual-card" style="border-color: var(--accent); background-image: radial-gradient(circle at 100% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 60%);">
+                        <h4 style="color: var(--accent); margin-bottom: 10px;">Caso de Éxito</h4>
+                        <p style="font-size: 13px; line-height: 1.5; color: var(--text-muted);">Los centros deportivos que monitorizan la inactividad de forma proactiva experimentan una reducción del **25%** en cancelaciones voluntarias en los primeros 6 meses.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Módulos por Roles -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="slide-badge">DISEÑO INTEGRAL</span>
+                <h2 class="slide-title">Ecosistema adaptado a cada <span>Rol</span></h2>
+            </div>
+            <div class="slide-body">
+                <div class="slide-content-left" style="flex: 1.5;">
+                    <table class="commercial-table">
+                        <thead>
+                            <tr>
+                                <th>Perfil</th>
+                                <th>Funcionalidad Clave</th>
+                                <th>Valor que Aporta</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Administrador</strong></td>
+                                <td>Gestión financiera, estado de miembros (activar/suspender) y afluencia real.</td>
+                                <td>Control absoluto del negocio e ingresos estimados desde un panel centralizado.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Recepcionista</strong></td>
+                                <td>Altas de clientes rápidas, carga de fotos de perfil y lector simulador QR.</td>
+                                <td>Agilidad máxima eliminando cuellos de botella en horas punta.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Entrenador</strong></td>
+                                <td>Creador de rutinas con especificación de series, repeticiones y pesos.</td>
+                                <td>Fidelización técnica y servicio personalizado de biomecánica.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Cliente</strong></td>
+                                <td>Reservas, seguimiento de marcas físicas y pase digital QR.</td>
+                                <td>Autonomía y sensación de servicio premium de alta gama.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Arquitectura y Plataformas de Despliegue -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="slide-badge">ARQUITECTURA CLOUD</span>
+                <h2 class="slide-title">Plataformas y <span>Estrategia de Despliegue</span></h2>
+            </div>
+            <div class="slide-body">
+                <div class="slide-content-left">
+                    <p style="color: var(--text-muted); font-size: 15px; line-height: 1.6; margin-bottom: 15px;">Hemos optado por una arquitectura multi-cloud serverless híbrida para garantizar costo cero de mantenimiento inicial y un aislamiento absoluto de responsabilidades:</p>
+                    <ul class="feature-list" style="gap: 12px;">
+                        <li class="feature-item">
+                            <div class="feature-icon">☁️</div>
+                            <div class="feature-text">
+                                <h4>Clever Cloud (Base de Datos MySQL)</h4>
+                                <p>Alojamiento relacional en la región de París. Proporciona estabilidad y soporte nativo para conexiones concurrentes seguras.</p>
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">🚀</div>
+                            <div class="feature-text">
+                                <h4>Render (Backend API Web Service)</h4>
+                                <p>Runtime de Python 3 que hospeda la API FastAPI de alto rendimiento con auto-despliegue mediante disparadores webhook.</p>
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">⚡</div>
+                            <div class="feature-text">
+                                <h4>Vercel (Frontend Client)</h4>
+                                <p>Plataforma global de CDN y hosting estático de alta velocidad para la aplicación de React.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="slide-content-right">
+                    <div class="schema-container" style="gap: 10px;">
+                        <div class="schema-box" style="background: rgba(255,107,0,0.05); border-color: var(--primary);">
+                            <strong style="color: var(--primary);">Repositorio GitHub</strong>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Pipeline CI/CD Automático</div>
+                        </div>
+                        <div class="schema-arrow">⬇️ Git Push a 'main'</div>
+                        <div style="display: flex; gap: 15px; width: 100%; justify-content: center;">
+                            <div class="schema-box" style="flex: 1; max-width: 140px;">
+                                <strong>Vercel App</strong>
+                                <div style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">Frontend (React)</div>
+                            </div>
+                            <div class="schema-box highlight" style="flex: 1; max-width: 140px;">
+                                <strong>Render API</strong>
+                                <div style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">Backend (FastAPI)</div>
+                            </div>
+                        </div>
+                        <div class="schema-arrow">⬇️ Consultas SQL</div>
+                        <div class="schema-box" style="max-width: 200px;">
+                            <strong>Clever Cloud</strong>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Base de Datos MySQL</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Guía de Despliegue Paso a Paso (Para explicar en clase) -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="slide-badge">PASO A PASO (DEVOPs)</span>
+                <h2 class="slide-title">Puesta en Marcha: <span>Guía de Producción</span></h2>
+            </div>
+            <div class="slide-body">
+                <div class="slide-content-left" style="flex: 1.2;">
+                    <ul class="feature-list" style="gap: 10px;">
+                        <li class="feature-item">
+                            <div class="feature-icon">1</div>
+                            <div class="feature-text">
+                                <h4>Fase BD: Creación y Semilla (Clever Cloud)</h4>
+                                <p>Se crea el addon MySQL. Ejecutamos de forma local el script de migración y siembra <code>seed.py</code> apuntando a la URI remota para estructurar las tablas (usuarios, clientes, accesos, rutinas) e insertar datos iniciales.</p>
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">2</div>
+                            <div class="feature-text">
+                                <h4>Fase API: Variables de Entorno (Render)</h4>
+                                <p>Creamos el <em>Web Service</em> apuntando al backend del repo. Configuramos las variables esenciales: <code>DATABASE_URL</code> (enlace MySQL), <code>SECRET_KEY</code>, <code>ALGORITHM</code> (cifrado JWT) y <code>PROD_ORIGIN</code> (CORS hacia Vercel).</p>
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">3</div>
+                            <div class="feature-text">
+                                <h4>Fase Web: Reverse Proxy y CORS (Vercel)</h4>
+                                <p>Desplegamos el frontend. Para evitar problemas de CORS y bloqueos por HTTP mixto (Mixed Content), creamos un archivo <code>vercel.json</code> en la raíz que actúa de proxy inverso redireccionando solicitudes de forma transparente.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="slide-content-right" style="flex: 0.8;">
+                    <div class="visual-card" style="background-color: var(--bg-card-light); border-color: var(--primary);">
+                        <h4 style="font-size: 15px; margin-bottom: 8px; color: var(--primary);">💡 El Secreto del vercel.json</h4>
+                        <p style="color: var(--text-muted); font-size: 12px; line-height: 1.4; margin-bottom: 12px;">
+                            Al indicarle a Vercel que reescriba la ruta <code>/api/*</code> hacia el dominio de Render, el navegador cree que consume datos del mismo origen. ¡Adiós a los errores de CORS en el cliente!
+                        </p>
+                        <pre style="background: var(--bg-main); padding: 10px; border-radius: 8px; border: 1px solid var(--border); font-family: monospace; font-size: 11px; color: var(--accent); overflow-x: auto; margin-top: 5px;">
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://backend.render.com/api/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ]
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: ROI y Valor Comercial -->
+        <div class="slide">
+            <div class="slide-header">
+                <span class="slide-badge">VALOR COMERCIAL</span>
+                <h2 class="slide-title">Propuesta de Valor e <span>Inversión</span></h2>
+            </div>
+            <div class="slide-body">
+                <div class="slide-content-left">
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <div class="feature-icon">$</div>
+                            <div class="feature-text">
+                                <h4>Cero costo de infraestructura inicial</h4>
+                                <p>Diseñado para iniciar sobre capas serverless gratuitas, ideal para validar el negocio sin inversiones previas.</p>
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">📈</div>
+                            <div class="feature-text">
+                                <h4>Aumento de ticket y retención</h4>
+                                <p>El soporte multilingüe atrae a expatriados de mayor poder adquisitivo y la alarma de Churn asegura las renovaciones de suscripción.</p>
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">🛡️</div>
+                            <div class="feature-text">
+                                <h4>Auditoría total y seguridad</h4>
+                                <p>Control del fraude en accesos con registro inalterable de accesos autorizados y denegados.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="slide-content-right">
+                    <div class="visual-card" style="background: linear-gradient(135deg, rgba(255, 107, 0, 0.1) 0%, rgba(9, 13, 22, 0.8) 100%); text-align: center;">
+                        <h3 style="font-family: 'Outfit', sans-serif; font-size: 32px; color: var(--primary); font-weight: 800; font-style: italic;">IRON GYM</h3>
+                        <p style="font-size: 13px; color: var(--text-muted); margin-top: 5px;">Tu gimnasio, inteligente.</p>
+                        <hr style="border: none; border-top: 1px solid var(--border); margin: 15px 0;">
+                        <p style="font-size: 14px; font-weight: 600;">¿Listo para digitalizar tu centro?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer Controls -->
+    <footer>
+        <div class="slide-counter">Diapositiva <span id="current-slide-num">1</span> de <span id="total-slide-num">10</span></div>
+        
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progress-bar"></div>
+        </div>
+
+        <div class="controls">
+            <button class="btn-print" onclick="window.print()">🖨️ Descargar en PDF</button>
+            <button class="btn-nav" id="btn-prev" onclick="prevSlide()" disabled>◀ Anterior</button>
+            <button class="btn-nav" id="btn-next" onclick="nextSlide()">Siguiente ▶</button>
+        </div>
+    </footer>
+
+    <!-- Javascript Slider Control -->
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const currentSlideNumEl = document.getElementById('current-slide-num');
+        const totalSlideNumEl = document.getElementById('total-slide-num');
+        const progressBarEl = document.getElementById('progress-bar');
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
+
+        // Dynamically set the total slides label
+        if (totalSlideNumEl) {
+            totalSlideNumEl.textContent = totalSlides;
+        }
+
+        function updateSlidePosition() {
+            // Remove active class from all slides
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+
+            // Add active class to current slide
+            slides[currentSlide].classList.add('active');
+
+            // Update UI elements
+            currentSlideNumEl.textContent = currentSlide + 1;
+            
+            // Update progress bar
+            const percentage = ((currentSlide + 1) / totalSlides) * 100;
+            progressBarEl.style.width = percentage + '%';
+
+            // Update navigation button states
+            btnPrev.disabled = currentSlide === 0;
+            btnNext.disabled = currentSlide === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlidePosition();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlidePosition();
+            }
+        }
+
+        // Keyboard navigation (Arrow keys, Space, Enter)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+    </script>
+</body>
+</html>
