@@ -28,6 +28,8 @@ import os
 # IMPORTANTE: En la vida real esta clave secreta va en un archivo oculto (.env)
 SECRET_KEY = os.getenv("SECRET_KEY", "tu_super_clave_secreta_super_larga_y_segura_para_el_gym") 
 ALGORITHM = os.getenv("ALGORITHM", "HS256")
+if ALGORITHM not in ["HS256", "HS384", "HS512", "RS256", "RS384", "RS512"]:
+    ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 # El token caduca en 1 hora por seguridad
 
 # --- FUNCIONES PARA CONTRASEÑAS ---

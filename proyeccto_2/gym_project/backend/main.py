@@ -74,6 +74,8 @@ app.add_middleware(
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 SECRET_KEY = os.getenv("SECRET_KEY", "iron_gym_super_secret_key")
 ALGORITHM = os.getenv("ALGORITHM", "HS256")
+if ALGORITHM not in ["HS256", "HS384", "HS512", "RS256", "RS384", "RS512"]:
+    ALGORITHM = "HS256"
 
 # Dependencia de Base de Datos
 def get_db():
