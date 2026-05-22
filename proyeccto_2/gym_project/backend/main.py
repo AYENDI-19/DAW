@@ -31,21 +31,6 @@ from core import email_service
 models.base.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Iron Gym API", version="2.0")
-
-import traceback
-
-@app.exception_handler(Exception)
-async def global_exception_handler(request: Request, exc: Exception):
-    return JSONResponse(
-        status_code=500,
-        content={
-            "message": "Internal Server Error",
-            "error_type": type(exc).__name__,
-            "error_detail": str(exc),
-            "traceback": traceback.format_exc()
-        }
-    )
-
 import api.progreso
 app.include_router(api.progreso.router, prefix="/api/progreso", tags=["progreso"])
 
