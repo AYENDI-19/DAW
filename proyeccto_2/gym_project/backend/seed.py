@@ -1,3 +1,10 @@
+import bcrypt
+# Mock bcrypt.__about__ for passlib compatibility in Python 3.12+
+if not hasattr(bcrypt, "__about__"):
+    class MockAbout:
+        __version__ = getattr(bcrypt, "__version__", "4.0.1")
+    bcrypt.__about__ = MockAbout()
+
 import sys
 import os
 from datetime import datetime, timedelta

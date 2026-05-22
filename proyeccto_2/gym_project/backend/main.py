@@ -1,3 +1,10 @@
+import bcrypt
+# Mock bcrypt.__about__ for passlib compatibility in Python 3.12+
+if not hasattr(bcrypt, "__about__"):
+    class MockAbout:
+        __version__ = getattr(bcrypt, "__version__", "4.0.1")
+    bcrypt.__about__ = MockAbout()
+
 from fastapi import FastAPI, Depends, HTTPException, status, BackgroundTasks, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
