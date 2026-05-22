@@ -1,0 +1,46 @@
+# Python virtual environment
+.venv/
+venv/
+ENV/
+env/
+
+# Node packages
+node_modules/
+
+# Vite production build
+dist/
+dist-ssr/
+*.local
+
+# Cache and temporary files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.eslintcache
+
+# Environment variables (sensitive data)
+.env
+.env.production
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Logs
+*.log
+logs/
+server.log
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Backups and temporary files
+proyeccto_2/gym_project/backend_frontend.zip
+Nuevo Documento de texto.txt
