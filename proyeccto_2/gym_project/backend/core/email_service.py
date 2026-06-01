@@ -10,8 +10,8 @@ load_dotenv()
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
 
 SMTP_SERVER = "smtp.gmail.com"
-SMTP_PORT = 587
-SMTP_USER = os.getenv("SMTP_USER") 
+SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
+SMTP_USER = os.getenv("SMTP_USER")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 
 def get_base_template(content: str, title: str):
@@ -80,14 +80,19 @@ def enviar_correo_base(destinatario: str, asunto: str, cuerpo_html: str):
         msg["Subject"] = asunto
         msg["From"] = f"IRON GYM <{SMTP_USER}>"
         msg["To"] = destinatario
-
         msg.attach(MIMEText(cuerpo_html, "html"))
 
-        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-            server.starttls()
-            server.login(SMTP_USER, SMTP_PASSWORD)
-            server.sendmail(SMTP_USER, destinatario, msg.as_string())
-        
+        # Puerto 465 → SSL directo | Puerto 587 → STARTTLS
+        if SMTP_PORT == 465:
+            with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as server:
+                server.login(SMTP_USER, SMTP_PASSWORD)
+                server.sendmail(SMTP_USER, destinatario, msg.as_string())
+        else:
+            with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+                server.starttls()
+                server.login(SMTP_USER, SMTP_PASSWORD)
+                server.sendmail(SMTP_USER, destinatario, msg.as_string())
+
         print(f"✅ Correo enviado a {destinatario}")
     except Exception as e:
         print(f"❌ Error enviando correo: {e}")
@@ -178,4 +183,3 @@ def notificar_alta_cliente_admin(background_tasks: BackgroundTasks, email_usuari
     """
     html = get_base_template(content, title)
     background_tasks.add_task(enviar_correo_base, email_usuario, "¡Tu acceso a IRON GYM está listo! 🥊", html)
-
