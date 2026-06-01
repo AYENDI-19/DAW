@@ -1,6 +1,7 @@
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.pool import NullPool
 from dotenv import load_dotenv
 
 # Cargar variables de entorno
@@ -11,7 +12,9 @@ URL_BASE_DATOS = os.getenv("DATABASE_URL", "mysql+pymysql://root:1@localhost:330
 if URL_BASE_DATOS.startswith("mysql://"):
     URL_BASE_DATOS = URL_BASE_DATOS.replace("mysql://", "mysql+pymysql://", 1)
 
-engine = create_engine(URL_BASE_DATOS)
+# Usamos NullPool para cerrar las conexiones inmediatamente al terminar la petición
+# Esto es crítico para bases de datos gratuitas (como Clever Cloud) que limitan las conexiones simultáneas (max 5)
+engine = create_engine(URL_BASE_DATOS, poolclass=NullPool)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
