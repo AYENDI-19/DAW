@@ -1,18 +1,15 @@
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
 import os
+import requests
 from dotenv import load_dotenv
 from fastapi import BackgroundTasks
 
 load_dotenv()
 
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
+BREVO_API_KEY = os.getenv("BREVO_API_KEY")
+EMAIL_FROM_NAME = "IRON GYM"
+EMAIL_FROM_ADDRESS = os.getenv("EMAIL_FROM_ADDRESS", "ayendi200219@gmail.com")
 
-SMTP_SERVER = "smtp.gmail.com"
-SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
-SMTP_USER = os.getenv("SMTP_USER")
-SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 
 def get_base_template(content: str, title: str):
     """Template base con diseño premium 'Iron Gym'"""
@@ -70,32 +67,36 @@ def get_base_template(content: str, title: str):
     </html>
     """
 
+
 def enviar_correo_base(destinatario: str, asunto: str, cuerpo_html: str):
+    """Envía un correo usando la API HTTP de Brevo (funciona en Render free tier)."""
     try:
-        if not SMTP_USER or not SMTP_PASSWORD:
-            print(f"⚠️ SMTP no configurado. Simulando envío a {destinatario}: {asunto}")
+        if not BREVO_API_KEY:
+            print(f"⚠️ BREVO_API_KEY no configurada. Simulando envío a {destinatario}: {asunto}")
             return
 
-        msg = MIMEMultipart("alternative")
-        msg["Subject"] = asunto
-        msg["From"] = f"IRON GYM <{SMTP_USER}>"
-        msg["To"] = destinatario
-        msg.attach(MIMEText(cuerpo_html, "html"))
+        url = "https://api.brevo.com/v3/smtp/email"
+        headers = {
+            "accept": "application/json",
+            "content-type": "application/json",
+            "api-key": BREVO_API_KEY,
+        }
+        payload = {
+            "sender": {"name": EMAIL_FROM_NAME, "email": EMAIL_FROM_ADDRESS},
+            "to": [{"email": destinatario}],
+            "subject": asunto,
+            "htmlContent": cuerpo_html,
+        }
 
-        # Puerto 465 → SSL directo | Puerto 587 → STARTTLS
-        if SMTP_PORT == 465:
-            with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as server:
-                server.login(SMTP_USER, SMTP_PASSWORD)
-                server.sendmail(SMTP_USER, destinatario, msg.as_string())
-        else:
-            with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-                server.starttls()
-                server.login(SMTP_USER, SMTP_PASSWORD)
-                server.sendmail(SMTP_USER, destinatario, msg.as_string())
+        response = requests.post(url, json=payload, headers=headers, timeout=10)
+        response.raise_for_status()
+        print(f"✅ Correo enviado a {destinatario} | Brevo ID: {response.json().get('messageId', 'N/A')}")
 
-        print(f"✅ Correo enviado a {destinatario}")
+    except requests.exceptions.HTTPError as e:
+        print(f"❌ Error HTTP de Brevo: {e.response.status_code} - {e.response.text}")
     except Exception as e:
         print(f"❌ Error enviando correo: {e}")
+
 
 def enviar_correo_reserva_async(background_tasks: BackgroundTasks, email_usuario: str, nombre_usuario: str, nombre_clase: str, fecha_clase: str):
     title = "¡Reserva Confirmada!"
@@ -118,6 +119,7 @@ def enviar_correo_reserva_async(background_tasks: BackgroundTasks, email_usuario
     html = get_base_template(content, title)
     background_tasks.add_task(enviar_correo_base, email_usuario, f"Confirmación: {nombre_clase} 🏋️‍♂️", html)
 
+
 def notificar_bienvenida_cliente(background_tasks: BackgroundTasks, email_usuario: str, nombre_usuario: str):
     title = "¡Bienvenido a la Élite!"
     content = f"""
@@ -131,6 +133,7 @@ def notificar_bienvenida_cliente(background_tasks: BackgroundTasks, email_usuari
     """
     html = get_base_template(content, title)
     background_tasks.add_task(enviar_correo_base, email_usuario, "Bienvenido a IRON GYM 🥊", html)
+
 
 def notificar_bienvenida_entrenador(background_tasks: BackgroundTasks, email_usuario: str, nombre_usuario: str):
     title = "¡Bienvenido al Equipo!"
@@ -146,6 +149,7 @@ def notificar_bienvenida_entrenador(background_tasks: BackgroundTasks, email_usu
     html = get_base_template(content, title)
     background_tasks.add_task(enviar_correo_base, email_usuario, "Bienvenido al Equipo IRON GYM 🏋️", html)
 
+
 def notificar_suspension_cuenta(background_tasks: BackgroundTasks, email_usuario: str, nombre_usuario: str, motivo: str):
     title = "Aviso de Suspensión"
     content = f"""
@@ -159,6 +163,7 @@ def notificar_suspension_cuenta(background_tasks: BackgroundTasks, email_usuario
     """
     html = get_base_template(content, title)
     background_tasks.add_task(enviar_correo_base, email_usuario, "Urgente: Estado de tu cuenta ⚠️", html)
+
 
 def notificar_alta_cliente_admin(background_tasks: BackgroundTasks, email_usuario: str, nombre_usuario: str, password_temporal: str):
     title = "¡Tu cuenta en IRON GYM!"
